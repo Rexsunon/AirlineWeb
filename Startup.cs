@@ -28,7 +28,7 @@ namespace AirlineWeb
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<AirlineDbContext>(opt => opt.UseMySql(Configuration.GetConnectionString("AirlineConnection")));
+            services.AddDbContext<AirlineDbContext>(opt => opt.UseMySql(Configuration.GetConnectionString("AirlineConnection"), MySqlServerVersion.AutoDetect(Configuration.GetConnectionString("AirlineConnection"))));
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
