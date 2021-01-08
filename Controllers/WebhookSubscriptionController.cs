@@ -24,7 +24,7 @@ namespace AirlineWeb.Controllers
         [HttpGet("{secret}", Name = "GetSubscriptionSecret")]
         public ActionResult<WebhookSubscriptionReadDto> GetSubscriptionSecret(string secret)
         {
-            var subscription = _context.webhookSubscriptions.FirstOrDefault(s => s.Secret == secret);
+            var subscription = _context.WebhookSubscriptions.FirstOrDefault(s => s.Secret == secret);
 
             if (subscription == null)
             {
@@ -37,7 +37,7 @@ namespace AirlineWeb.Controllers
         [HttpPost]
         public ActionResult<WebhookSubscriptionReadDto> CreateSubcription(WebhookSubscriptionCreateDto webhookSubscriptionCreateDto)
         {
-            var subscription = _context.webhookSubscriptions.FirstOrDefault(s => s.WebhookURI == webhookSubscriptionCreateDto.WebhookURI);
+            var subscription = _context.WebhookSubscriptions.FirstOrDefault(s => s.WebhookURI == webhookSubscriptionCreateDto.WebhookURI);
 
             if (subscription == null)
             {
@@ -47,7 +47,7 @@ namespace AirlineWeb.Controllers
                 subscription.WebhookPublisher = "PanNiger";
                 try
                 {
-                    _context.webhookSubscriptions.Add(subscription);
+                    _context.WebhookSubscriptions.Add(subscription);
                     _context.SaveChanges();
                 }
                 catch (Exception ex)
