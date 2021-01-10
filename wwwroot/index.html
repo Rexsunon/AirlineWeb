@@ -13,12 +13,12 @@
         <h1 class="display-3 text-center my-4">AirlineWebApp</h1>
         <h3 class="display-5 text-center my-4">Webhook Registration</h3>
 
-        <div class="alertSuccess alert alert-success">
+        <div id="alertSuccess" class="alert alert-success">
             <strong>Success</strong> <label id="successMessage">Webhook Registered</label>
         </div>
 
-        <div class="alertDanger alert alert-danger">
-            <strong>Danger</strong> <label id="denagerMessage">Please check the log files</label>
+        <div id="alertDanger" class="alert alert-danger">
+            <strong>Danger</strong> <label id="dangerMessage">Please check the log files</label>
         </div>
 
         <div id="registraion">
@@ -43,4 +43,43 @@
         </div>
     </div>
 </body>
+<script>
+    let registerButton = document.getElementById('register');
+    // let statusLabel = document.getElementById('statusLabel');
+    let webhookURI = document.getElementById('webhook');
+    let webhookType = document.getElementById('webhooktype');
+    let successBox = document.getElementById('alertSuccess');
+    let dangerBox = document.getElementById('alertDanger');
+    let successMessage = document.getElementById('successMessage');
+    let dangerMessage = document.getElementById('dangerMessage');
+
+    successBox.style.display = 'none';
+    dangerBox.style.display = 'none';
+
+    registerButton.onclick = function () {
+        successBox.style.display = 'none';
+        dangerBox.style.display = 'none';
+
+        if (webhookURI.value == "") {
+            dangerMessage.innerHTML = "Please Enter a URI";
+            dangerBox.style.display = 'block';
+        } else {
+            (async () => {
+                const rawResponse = await fetch('https://localhost:5001/api/WebhookSubscription', {
+                    method: 'post',
+                    body: JSON.stringify({ webhookURI: webhookURI.value, webhookType: webhookType.value }),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                const content = await rawResponse.json();
+
+                successMessage.innerHTML = `Webhook Registered please use secret: ${content.secret} to validate inbaound request.`;
+                successBox.style.display = 'block';
+
+                console.log(content);
+            })();
+        }
+    };
+</script>
 </html>
