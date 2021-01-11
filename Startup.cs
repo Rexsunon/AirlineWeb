@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AirlineWeb.Data;
+using AirlineWeb.MessageBus;
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -38,6 +39,7 @@ namespace AirlineWeb
             });
             // Configure AutoMapper
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            services.AddSingleton<IMessageBusClient, MessageBusClient>(); // Register message bus as a service.
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
