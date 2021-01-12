@@ -10,13 +10,9 @@ namespace AirlineWeb.Dtos
         }
 
         public string Id { get; }
-
         public string WeebhookType { get; set; }
-
         public string FlightCode { get; set; }
-
         public decimal OldPrice { get; set; }
-
         public decimal NewPrice { get; set; }
     }
 }
